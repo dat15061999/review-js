@@ -8,7 +8,7 @@ export class Class {
     );
 
     this.teachers = teachers.map(
-      (teacher) => new Teacher(teacher.name, teacher.age)
+      (teacher) => new Teacher(teacher.name, teacher.age, teacher.id)
     );
   }
 
@@ -24,6 +24,12 @@ export class Class {
   }
 
   removeStudentById(id) {}
+
+  removeTeacherById(id) {
+    console.log(this.teachers.filter((t) => t.id !== id));
+
+    this.teachers = this.teachers.filter((t) => t.id !== id);
+  }
 
   removeStudent(student) {
     return this.removeStudentById(student.id);
@@ -61,6 +67,8 @@ export class Class {
       return {
         Name: teacher.name,
         Age: teacher.age,
+        Edit: teacher.id,
+        Delete: teacher.id,
       };
     });
   }

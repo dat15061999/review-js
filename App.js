@@ -19,7 +19,7 @@ export default function App({ students, subjects, teachers }) {
     "Average",
   ];
 
-  const columns2 = ["Name", "Age"];
+  const columns2 = ["Name", "Age", "Edit", "Delete"];
 
   const [data, setData] = useState(classA.toDataTable());
 
@@ -31,7 +31,6 @@ export default function App({ students, subjects, teachers }) {
     createElement(Form, {
       onSubmit: (value) => {
         classA.addStudent(new Student(value.name, value.age, {}));
-
         setData(classA.toDataTable());
       },
     }),
@@ -42,14 +41,24 @@ export default function App({ students, subjects, teachers }) {
     createElement("h2", {}, "Teachers"),
     createElement(FormTeacher, {
       onSubmit: (value) => {
-        console.log(value);
-
         classA.addTeacher(new Teacher(value.name, value.age));
-
         setData2(classA.toDataTableTeacher());
       },
     }),
-    createElement(Table, { data: data2, columns: columns2 }),
+    createElement(Table, {
+      data: data2,
+      columns: columns2,
+      handleEdit: (id) => {
+        console.log(id);
+
+        // classA.removeTeacherById(id);
+        // setData2(classA.toDataTableTeacher());
+      },
+      handleDelete: (id) => {
+        classA.removeTeacherById(id);
+        setData2(classA.toDataTableTeacher());
+      },
+    }),
     createElement("hr"),
   ]);
 }
