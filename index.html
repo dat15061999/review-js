@@ -1,0 +1,38 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Document</title>
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://cdn.skypack.dev/react@17",
+                "react-dom": "https://cdn.skypack.dev/react-dom@17"
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script src="./index.js" type="text/babel" defer data-type="module"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+
+<!--    <script>-->
+<!--      function onError(err) {-->
+<!--        console.error('Error registering service-worker:', err)-->
+<!--        document.getElementById('app').innerText = err.toString()-->
+<!--      }-->
+<!--      if ('serviceWorker' in navigator) {-->
+<!--        navigator.serviceWorker.register('./service-worker.js', {scope: '/teach/react-school/'})-->
+<!--          .then(registration => {-->
+<!--            window.serviceWorkerRegistration = registration-->
+<!--            // use `await window.serviceWorkerRegistration.unregister()` to unregister the service worker-->
+<!--          })-->
+<!--          .catch(onError)-->
+<!--      } else {-->
+<!--        onError('Browser does not support service workers :-(')-->
+<!--      }-->
+<!--    </script>-->
+</body>
+</html>
