@@ -1,4 +1,4 @@
-import { createElement, useState } from "react";
+import { createElement, useEffect, useState } from "react";
 
 import Table from "./components/Table.js";
 import Form from "./components/Form.js";
@@ -19,11 +19,25 @@ export default function App({ students, subjects, teachers }) {
     "Average",
   ];
 
-  const columns2 = ["Name", "Age", "Edit", "Delete"];
+  const columns2 = ["Name", "Age", "Actions"];
 
   const [data, setData] = useState(classA.toDataTable());
 
   const [data2, setData2] = useState(classA.toDataTableTeacher());
+
+  const [edit, setEdit] = useState();
+
+  const resetEdit = () => {
+    setEdit({
+      name: "",
+      age: "",
+      id: "",
+    });
+  };
+
+  useEffect(() => {
+    resetEdit();
+  }, []);
 
   return createElement("section", {}, [
     createElement("h1", {}, "School"),
@@ -41,18 +55,21 @@ export default function App({ students, subjects, teachers }) {
     createElement("h2", {}, "Teachers"),
     createElement(FormTeacher, {
       onSubmit: (value) => {
-        classA.addTeacher(new Teacher(value.name, value.age));
+        console.log(value.id ? true : false);
+
+        value.id
+          ? classA.updateTeacher(value)
+          : classA.addTeacher(new Teacher(value.name, value.age));
         setData2(classA.toDataTableTeacher());
+        resetEdit();
       },
+      content: edit,
     }),
     createElement(Table, {
       data: data2,
       columns: columns2,
-      handleEdit: (id) => {
-        console.log(id);
-
-        // classA.removeTeacherById(id);
-        // setData2(classA.toDataTableTeacher());
+      handleEdit: (content) => {
+        setEdit({ ...content });
       },
       handleDelete: (id) => {
         classA.removeTeacherById(id);

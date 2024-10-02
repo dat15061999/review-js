@@ -1,12 +1,27 @@
 import { createElement } from "react";
 
 export default function Table({ data, columns, handleEdit, handleDelete }) {
-  const update = (id) => {
-    handleEdit(id);
+  const update = (content) => {
+    handleEdit(content);
   };
 
-  const deleted = (id) => {
-    handleDelete(id);
+  const deleted = (content) => {
+    handleDelete(content.id);
+  };
+
+  const actions = (content) => {
+    return [
+      createElement(
+        "button",
+        { type: "button", onClick: () => update(content) },
+        "Edit"
+      ),
+      createElement(
+        "button",
+        { type: "button", onClick: () => deleted(content) },
+        "Delete"
+      ),
+    ];
   };
 
   return createElement("table", {}, [
@@ -26,19 +41,7 @@ export default function Table({ data, columns, handleEdit, handleDelete }) {
           {},
           columns.map((column) => {
             return createElement("td", {}, [
-              column === "Edit"
-                ? createElement(
-                    "button",
-                    { type: "button", onClick: () => update(row[column]) },
-                    "Edit"
-                  )
-                : column === "Delete"
-                ? createElement(
-                    "button",
-                    { type: "button", onClick: () => deleted(row[column]) },
-                    "Delete"
-                  )
-                : row[column],
+              column === "Actions" ? actions(row[column]) : row[column],
             ]);
           })
         );

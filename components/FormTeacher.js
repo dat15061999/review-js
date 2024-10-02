@@ -1,6 +1,6 @@
-import { createElement, useState } from "react";
+import { createElement, useEffect, useState } from "react";
 
-export default function FormTeacher({ onSubmit }) {
+export default function FormTeacher({ onSubmit, content }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit(state);
@@ -9,7 +9,12 @@ export default function FormTeacher({ onSubmit }) {
   const [state, setState] = useState({
     name: "",
     age: "",
+    id: "",
   });
+
+  useEffect(() => {
+    setState({ ...content });
+  }, [content]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -19,6 +24,12 @@ export default function FormTeacher({ onSubmit }) {
   return createElement("form", { onSubmit: handleSubmit }, [
     createElement("fieldset", {}, [
       createElement("legend", {}, "Add Teacher"),
+      createElement("input", {
+        type: "text",
+        name: "id",
+        hidden: true,
+        value: state.id || "",
+      }),
       createElement("input", {
         type: "text",
         name: "name",

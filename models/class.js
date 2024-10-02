@@ -26,8 +26,6 @@ export class Class {
   removeStudentById(id) {}
 
   removeTeacherById(id) {
-    console.log(this.teachers.filter((t) => t.id !== id));
-
     this.teachers = this.teachers.filter((t) => t.id !== id);
   }
 
@@ -39,6 +37,15 @@ export class Class {
 
   updateStudent(student) {
     return this.updateStudentById(student.id, student);
+  }
+
+  updateTeacher(teacher) {
+    this.teachers.map((s) => {
+      if (s.id === teacher.id) {
+        s.name = teacher.name;
+        s.age = teacher.age;
+      }
+    });
   }
 
   getStudents() {
@@ -67,8 +74,7 @@ export class Class {
       return {
         Name: teacher.name,
         Age: teacher.age,
-        Edit: teacher.id,
-        Delete: teacher.id,
+        Actions: teacher,
       };
     });
   }
