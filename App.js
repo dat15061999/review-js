@@ -17,6 +17,7 @@ export default function App({ students, subjects, teachers }) {
     "English",
     "Physics",
     "Average",
+    "Actions",
   ];
 
   const columns2 = ["Name", "Age", "Actions"];
@@ -27,6 +28,8 @@ export default function App({ students, subjects, teachers }) {
 
   const [edit, setEdit] = useState();
 
+  const [editStudent, setEditStudent] = useState();
+
   const resetEdit = () => {
     setEdit({
       name: "",
@@ -35,8 +38,17 @@ export default function App({ students, subjects, teachers }) {
     });
   };
 
+  const resetEditStudent = () => {
+    setEditStudent({
+      name: "",
+      age: "",
+      id: "",
+    });
+  };
+
   useEffect(() => {
     resetEdit();
+    resetEditStudent();
   }, []);
 
   return createElement("section", {}, [
@@ -44,18 +56,38 @@ export default function App({ students, subjects, teachers }) {
     createElement("p", {}, "Welcome to the school"),
     createElement(Form, {
       onSubmit: (value) => {
-        classA.addStudent(new Student(value.name, value.age, {}));
+        if (!value.name || !value.age) {
+          return;
+        }
+
+        value.id
+          ? classA.updateStudent(value)
+          : classA.addStudent(new Student(value.name, value.age, {}));
+        setData(classA.toDataTable());
+        resetEditStudent();
+      },
+      content: editStudent,
+    }),
+    createElement("hr"),
+    createElement("h2", {}, "Students"),
+    createElement(Table, {
+      data,
+      columns,
+      handleEdit: (content) => {
+        setEditStudent({ ...content });
+      },
+      handleDelete: (id) => {
+        classA.removeStudentById(id);
         setData(classA.toDataTable());
       },
     }),
     createElement("hr"),
-    createElement("h2", {}, "Students"),
-    createElement(Table, { data, columns }),
-    createElement("hr"),
     createElement("h2", {}, "Teachers"),
     createElement(FormTeacher, {
       onSubmit: (value) => {
-        console.log(value.id ? true : false);
+        if (!value.name || !value.age) {
+          return;
+        }
 
         value.id
           ? classA.updateTeacher(value)
@@ -74,6 +106,7 @@ export default function App({ students, subjects, teachers }) {
       handleDelete: (id) => {
         classA.removeTeacherById(id);
         setData2(classA.toDataTableTeacher());
+        resetEdit();
       },
     }),
     createElement("hr"),

@@ -1,6 +1,6 @@
-import { createElement, useState } from 'react';
+import { createElement, useEffect, useState } from "react";
 
-export default function Form({ onSubmit }) {
+export default function Form({ onSubmit, content }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -8,8 +8,9 @@ export default function Form({ onSubmit }) {
   };
 
   const [state, setState] = useState({
-    name: '',
-    age: '',
+    name: "",
+    age: "",
+    id: "",
   });
 
   const handleChange = (event) => {
@@ -19,15 +20,36 @@ export default function Form({ onSubmit }) {
       ...state,
       [name]: value,
     });
+  };
 
-  }
+  useEffect(() => {
+    setState({ ...content });
+  }, [content]);
 
-  return createElement('form', { onSubmit: handleSubmit }, [
-    createElement('fieldset', {}, [
-      createElement('legend', {}, 'Add Student'),
-      createElement('input', { type: 'text', name: 'name', placeholder: 'Name', onChange: handleChange, value: state.name || '' }),
-      createElement('input', { type: 'number', name: 'age', placeholder: 'Age', onChange: handleChange, value: state.age || '' }),
-      createElement('button', { type: 'submit' }, 'Submit')
+  return createElement("form", { onSubmit: handleSubmit }, [
+    createElement("fieldset", {}, [
+      createElement("legend", {}, "Add Student"),
+      createElement("input", {
+        type: "text",
+        name: "id",
+        hidden: true,
+        value: state.id || "",
+      }),
+      createElement("input", {
+        type: "text",
+        name: "name",
+        placeholder: "Name",
+        onChange: handleChange,
+        value: state.name || "",
+      }),
+      createElement("input", {
+        type: "number",
+        name: "age",
+        placeholder: "Age",
+        onChange: handleChange,
+        value: state.age || "",
+      }),
+      createElement("button", { type: "submit" }, "Submit"),
     ]),
   ]);
 }

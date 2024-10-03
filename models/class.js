@@ -4,7 +4,7 @@ import { Teacher } from "./teacher.js";
 export class Class {
   constructor(students = [], teachers = []) {
     this.students = students.map(
-      (student) => new Student(student.name, student.tuoi, student.scores)
+      (student) => new Student(student.name, student.age, student.scores)
     );
 
     this.teachers = teachers.map(
@@ -23,7 +23,9 @@ export class Class {
     return this.findStudentById(student.id);
   }
 
-  removeStudentById(id) {}
+  removeStudentById(id) {
+    this.students = this.students.filter((s) => s.id !== id);
+  }
 
   removeTeacherById(id) {
     this.teachers = this.teachers.filter((t) => t.id !== id);
@@ -33,7 +35,14 @@ export class Class {
     return this.removeStudentById(student.id);
   }
 
-  updateStudentById(id, student) {}
+  updateStudentById(id, student) {
+    this.students.map((s) => {
+      if (s.id === id) {
+        s.name = student.name;
+        s.age = student.age;
+      }
+    });
+  }
 
   updateStudent(student) {
     return this.updateStudentById(student.id, student);
@@ -65,6 +74,7 @@ export class Class {
         English: student.getScore("english"),
         Physics: student.getScore("physics"),
         Average: student.getAverage(),
+        Actions: student,
       };
     });
   }
