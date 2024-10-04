@@ -57,9 +57,9 @@ export default function App({ students, subjects, teachers }) {
 
   const resetEditPoint = () => {
     setEditPoint({
-      math: 0,
-      eng: 0,
-      phy: 0,
+      math: "",
+      eng: "",
+      phy: "",
       id: "",
     });
   };

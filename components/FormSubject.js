@@ -7,9 +7,9 @@ export default function FormSubject({ onSubmit, content, listStudent }) {
   };
 
   const [state, setState] = useState({
-    math: 0,
-    eng: 0,
-    phy: 0,
+    math: "",
+    eng: "",
+    phy: "",
     id: "",
   });
 

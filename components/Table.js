@@ -40,7 +40,7 @@ export default function Table({ data, columns, handleEdit, handleDelete }) {
           "tr",
           {},
           columns.map((column) => {
-            return createElement("td", {}, [
+            return createElement("td", { className: "content" }, [
               column === "Actions" ? actions(row[column]) : row[column],
             ]);
           })
