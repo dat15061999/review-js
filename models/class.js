@@ -48,6 +48,20 @@ export class Class {
     return this.updateStudentById(student.id, student);
   }
 
+  updateStudentPoint(student) {
+    const point = {
+      mathematics: Number(student.math),
+      english: Number(student.eng),
+      physics: Number(student.phy),
+    };
+
+    this.students.map((s) => {
+      if (s.id === student.id) {
+        s.scores.score = point;
+      }
+    });
+  }
+
   updateTeacher(teacher) {
     this.teachers.map((s) => {
       if (s.id === teacher.id) {

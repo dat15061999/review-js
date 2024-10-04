@@ -1,4 +1,4 @@
-import { Score } from './score.js';
+import { Score } from "./score.js";
 
 export class Student {
   constructor(name, age, scores = {}) {
