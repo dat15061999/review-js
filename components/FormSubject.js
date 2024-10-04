@@ -27,13 +27,23 @@ export default function FormSubject({ onSubmit, content, listStudent }) {
   const handleChangeSelect = (event) => {
     const { name, value } = event.target;
 
+    if (!value) {
+      setState({
+        math: "",
+        eng: "",
+        phy: "",
+        id: "",
+      });
+      return;
+    }
+
     const currentPoint = students.find((s) => s.id === value).scores.score;
 
     setState({
       math: currentPoint.mathematics ?? 0,
       eng: currentPoint.english ?? 0,
       phy: currentPoint.physics ?? 0,
-      [name]: value,
+      [name]: value ?? "",
     });
   };
 
